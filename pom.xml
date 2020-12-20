@@ -33,10 +33,7 @@
                 <artifactId>hibernate-core</artifactId>
                 <version>5.0.7.Final</version>
             </dependency>
-        <dependency>
-            <groupId>org.hibernate.jpa.HibernatePersistenseProvider</groupId>
-            <artifactId>hibernate-persistense-provider</artifactId>
-        </dependency>
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
