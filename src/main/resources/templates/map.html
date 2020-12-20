@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+            integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+            crossorigin="anonymous"></script>
+
+    <script src="leaflet.geometryutil.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="map.css">
+    <title>Категории</title>
+</head>
+<body>
+<div id="celo">
+    <div id="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class=href="#"><img id="logo" src="Images/image.jpg"></a>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a th:if="${language}=='EN'" class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
+                        <a th:if="${language}!='EN'" class="nav-link" href="/насловна">Насловна<span class="sr-only">(current)</span></a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a th:if="${language}=='EN'" class="nav-link" href="/категории">Categories</a>
+                        <a th:if="${language}!='EN'" class="nav-link" href="/категории">Категории</a>
+
+                    </li>
+                    <li class="nav-item active">
+                        <a th:if="${language}=='EN'"class="nav-link" href="/map">Map</a>
+                        <a th:if="${language}!='EN'"class="nav-link" href="/мапа">Мапа</a>
+
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a th:if="${language}!='EN'" th:href="@{/map}"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                        <a th:if="${language}=='EN'" th:href="@{/мапа}"><i class="fa fa-globe" aria-hidden="true"></i></a>
+
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                    </li>
+
+                </ul>
+                <form th:if="${language}!='EN'"class="form-inline my-2 my-lg-0" th:method="POST" th:action="@{/мапа}">
+
+                    <input class="form-control mr-sm-2" type="search" placeholder="Пребарај" aria-label="Search">
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Пребарај</button>
+                </form>
+                <form th:if="${language}=='EN'"class="form-inline my-2 my-lg-0" th:method="POST" th:action="@{/map}">
+
+                    <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+    <div id="mapata" >
+
+
+    </div>
+    <div id="description">
+
+    </div>
+    <div id="distances">
+
+    </div>
+</div>
+
+<footer>
+    <p th:if="${language}!='EN'">Контакт:</p>
+    <p th:if="${language}=='EN'">Contact:</p>
+    <div id="futer" class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+</footer>
+<script >
+    // $("document").ready(function () {
+    //     $.get("Centar-Supermarketi.txt", function(data) {
+    //         document.getElementById("description").innerText=data;
+    //         var koordinati=[];
+    //         var lat=[];
+    //         var lan=[];
+    //         var regex = /[+-]?\d+(\.\d+)?/g;
+    //
+    //
+    //         var floats = data.match(regex).map(function(v) { return parseFloat(v); });
+    //         console.log(floats);
+    //         for (var i=0;i<floats.length;i++){
+    //             if(floats[i]%1!=0){
+    //                 koordinati.push(floats[i]);
+    //             }
+    //         }
+    //         for (var i=0;i<koordinati.length;i++){
+    //             if(koordinati[i]>30){
+    //                 lat.push(koordinati[i]);
+    //             }
+    //         }
+    //         for (var i=0;i<koordinati.length;i++){
+    //             if(koordinati[i]<30){
+    //                 lan.push(koordinati[i]);
+    //             }
+    //         }
+    //         console.log(koordinati);
+    //         console.log(lat);
+    //         console.log(lan);
+    //         var razdeleni=data.split("\n");
+    //         console.log(razdeleni);
+    //         var prv=razdeleni[1].split(",");
+    //         console.log(prv);
+    //         var prv_lat=prv[1];
+    //         var prv_lon=prv[2];
+    //         console.log(prv_lat);
+    //         console.log(prv_lon);
+
+            var map=L.map('mapata').setView([41.995918301436745,21.431281780330234],14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+    if("geolocation" in navigator){
+        navigator.geolocation.getCurrentPosition(function (position) {
+            console.log(position.coords.latitude,position.coords.longitude);
+            var myIcon = L.icon({
+                iconUrl: 'https://images-ext-2.discordapp.net/external/FKL7n1S3UT9PJZpWuSLh3q7smhtWDiHg5GFJzVsNnAA/https/cdn01.vulcanpost.com/wp-uploads/2015/08/Street_View_logo.png',
+                iconSize: [70, 95],
+                popupAnchor: [0, -40],
+            });
+
+            L.marker([position.coords.latitude, position.coords.longitude],{icon: myIcon}).bindPopup('Your are here').addTo(map)
+            L.circle([position.coords.latitude,position.coords.longitude],100).addTo(map);
+            var arr=[];
+            // for (var i = 0; i < lat.length; i++) {
+            //     marker = new L.marker([lat[i], lan[i]])
+            //         .addTo(map)
+
+
+
+
+        });
+    }else{
+        console.log("you dont have geolocation");
+    }
+
+</script>
+<script th:inline="javascript" th:each="marketloc : ${marketlocs}">
+    console.log([[${marketloc.getLatitude()}]])
+    marker = new L.marker([ [[${marketloc.getLatitude()}]],[[${marketloc.getLongitude()}]] ])
+        .addTo(map);
+    var a=[[${marketloc.getName()}]];
+
+
+    marker.bindPopup(a).openPopup();
+
+
+
+</script>
+
+
+
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
