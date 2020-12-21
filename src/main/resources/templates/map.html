@@ -160,13 +160,11 @@
         navigator.geolocation.getCurrentPosition(function (position) {
             console.log(position.coords.latitude,position.coords.longitude);
             var myIcon = L.icon({
-                iconUrl: 'https://cdn01.vulcanpost.com/wp-uploads/2015/08/Street_View_logo.png',
+                iconUrl: 'https://icon-library.com/images/you-are-here-icon/you-are-here-icon-2.jpg',
                 iconSize: [70, 95],
-                popupAnchor: [0, -40],
             });
 
-            L.marker([position.coords.latitude, position.coords.longitude],{icon: myIcon}).bindPopup('Your are here').addTo(map)
-            L.circle([position.coords.latitude,position.coords.longitude],100).addTo(map);
+
             var arr=[];
             // for (var i = 0; i < lat.length; i++) {
             //     marker = new L.marker([lat[i], lan[i]])
@@ -192,6 +190,39 @@
     console.log(a)
 
 
+
+</script>
+<script>
+    if("geolocation" in navigator){
+        navigator.geolocation.getCurrentPosition(function (position) {
+            console.log(position.coords.latitude,position.coords.longitude);
+            var myIcon = L.icon({
+                iconUrl: 'https://cdn01.vulcanpost.com/wp-uploads/2015/08/Street_View_logo.png',
+                iconSize: [70, 95],
+                shadowSize:   [50, 64], // size of the shadow
+                iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                shadowAnchor: [4, 62],  // the same for the shadow
+                popupAnchor:  [-10, -76]
+
+            });
+
+
+         marker= new  L.marker([position.coords.latitude, position.coords.longitude],{icon: myIcon}).bindPopup('Your are here').addTo(map)
+        circle= new   L.circle([position.coords.latitude,position.coords.longitude],100).addTo(map);
+         b="You are here"
+         marker.bindPopup().openPopup(b);
+            var arr=[];
+            // for (var i = 0; i < lat.length; i++) {
+            //     marker = new L.marker([lat[i], lan[i]])
+            //         .addTo(map)
+
+
+
+
+        });
+    }else{
+        console.log("you dont have geolocation");
+    }
 
 </script>
 
