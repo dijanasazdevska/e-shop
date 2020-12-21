@@ -41,8 +41,8 @@
                         <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a th:if="${language}!='EN'" th:href="@{/категории}"><i class="fa fa-globe" aria-hidden="true"></i></a>
-                        <a th:if="${language}=='EN'" th:href="@{/categories}"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                        <a th:if="${language}!='EN'" th:href="@{'/категории/{category}'  (category=${category})"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                        <a th:if="${language}=='EN'" th:href="@{'/categories/{category}' (category=${category})}"><i class="fa fa-globe" aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
