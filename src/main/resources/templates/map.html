@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="map.css">
-    <title>Мапа</title>
+    <title th:if="${language}!='EN'">Мапа</title>
+    <title th:if="${language}=='EN'">Мапа</title>
 </head>
 <body>
 <div id="celo">
@@ -83,6 +84,9 @@
     </div>
 
     <div id="distances">
+
+    </div>
+    <div id="nearest">
 
     </div>
 
@@ -183,7 +187,8 @@
 
 
 arr=[]
-
+    distances=[]
+markets=[]
 </script>
 <script th:inline="javascript" th:each="marketloc : ${marketlocs}">
     console.log([[${marketloc.getLatitude()}]])
@@ -204,8 +209,23 @@ arr=[]
             var oddalecen = document.getElementById("distances");
 var latitude=[[${marketloc.getLatitude()}]];
 var longitude=[[${marketloc.getLongitude()}]]
-            arr.push("<p>"+[[${marketloc.getName()}]] + " e оддалечен " + parseInt(L.GeometryUtil.distance(map, [position.coords.latitude, position.coords.longitude], [latitude,longitude]) * 7.1) + " Метри </p>");
-oddalecen.innerHTML=arr.join("");
+            if([[${language}]]!='EN') {
+                arr.push("<p>" + [[${marketloc.getName()}]] + " e оддалечен од вас " + parseInt(L.GeometryUtil.distance(map, [position.coords.latitude, position.coords.longitude], [latitude, longitude]) * 7.1) + " метри </p>");
+            markets.push([[${marketloc.getName()}]]);
+
+
+            }
+            else{
+                arr.push("<p>" + [[${marketloc.getNameEN()}]] + " is away from you " + parseInt(L.GeometryUtil.distance(map, [position.coords.latitude, position.coords.longitude], [latitude, longitude]) * 7.1) + " meters </p>");
+                markets.push([[${marketloc.getNameEN()}]]);
+
+
+
+
+            }
+            distances.push(parseInt(L.GeometryUtil.distance(map, [position.coords.latitude, position.coords.longitude], [latitude, longitude]) * 7.1));
+
+            oddalecen.innerHTML=arr.join("");
         });
     }
 
@@ -238,6 +258,24 @@ oddalecen.innerHTML=arr.join("");
             // for (var i = 0; i < lat.length; i++) {
             //     marker = new L.marker([lat[i], lan[i]])
             //         .addTo(map)
+nearestmarkets=[];
+            j=0;
+            min=markets[0];
+            for(var i =0;i < markets.length;i++){
+                if(distances[i]<min){
+                    nearestmarkets.push(markets[i]);
+                    min=markets[i];
+                    if(nearestmarkets.length===5)
+                        break;
+
+
+                }
+
+            }
+            if([[${language}]]==='EN')
+            document.getElementById("nearest").innerText="Your nearest markets are : "+nearestmarkets.join(",");
+            else
+                document.getElementById("nearest").innerText="Вашите најблиски маркет се: "+nearestmarkets.join(",");
 
 
 

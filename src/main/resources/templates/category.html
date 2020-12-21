@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="categories.css">
+    <link rel="stylesheet" href="categories.css"/>
     <title>Категории</title>
 </head>
 <body>
@@ -41,8 +41,8 @@
                         <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a th:if="${language}!='EN'" th:href="@{'/категории/{category}'  (category=${category})"><i class="fa fa-globe" aria-hidden="true"></i></a>
-                        <a th:if="${language}=='EN'" th:href="@{'/categories/{category}' (category=${category})}"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                        <a th:if="${language}!='EN'"  th:href="@{'/categorу/{category}'  (category=${category.getNameEN()})}"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                        <a th:if="${language}=='EN'" th:href="@{'/категорија/{category}' (category=${category.getName()})}"><i class="fa fa-globe" aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i></a>

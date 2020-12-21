@@ -8,6 +8,8 @@ import mk.ukim.finki.dians.eshop.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -26,13 +28,23 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Product> findProductsByCategory(String name) {
-        return productRepository.findProductByCategory(categoryRepository.findCategoryByName(name));
+        return productRepository.findProductByCategory(categoryRepository.findCategoryByName(name).get());
 
     }
 
     @Override
     public List<Product> findProductsByCategoryEN(String name) {
-        return productRepository.findProductByCategory(categoryRepository.findCategoryByNameEN(name));
+        return productRepository.findProductByCategory(categoryRepository.findCategoryByNameEN(name).get());
+    }
+
+    @Override
+    public Optional<Category> findCategoryByName(String name) {
+        return categoryRepository.findCategoryByName(name.toUpperCase());
+    }
+
+    @Override
+    public Optional<Category> findCategoryByNameEN(String name) {
+        return categoryRepository.findCategoryByNameEN(name.toUpperCase());
     }
 
 

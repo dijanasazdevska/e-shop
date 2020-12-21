@@ -23,7 +23,7 @@ public class SearchControllerEN {
     public String getSearch(Model model, HttpServletRequest request){
         model.addAttribute("products",request.getSession().getAttribute("products"));
         model.addAttribute("language","EN");
-        return "category"  ;
+        return "search"  ;
     }
     @PostMapping
     public String postSearch(@RequestParam String search , HttpServletRequest request){

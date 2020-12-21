@@ -13,6 +13,7 @@ public class MarketLocation {
     private float latitude;
     private float longitude;
     private String name;
+    private String nameEN;
     private String address;
     @ManyToOne
     private Market market;
@@ -30,6 +31,9 @@ public class MarketLocation {
 
     }
 
+    public String getNameEN() {
+        return nameEN;
+    }
 
     public Long getId() {
         return id;

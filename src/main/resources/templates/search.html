@@ -9,10 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="categories.css">
-    <title th:if="${language}!='EN'">Категории</title>
-    <title th:if="${language}=='EN'">Categories</title>
-
+    <link rel="stylesheet" href="categories.css"/>
+    <title>Категории</title>
 </head>
 <body>
 <div id="celo">
@@ -24,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a class=href="#"><img id="logo" src="images/image.jpg"></a>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a th:if="${language}=='EN'" class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
                         <a th:if="${language}!='EN'" class="nav-link" href="/насловна">Насловна<span class="sr-only">(current)</span></a>
 
@@ -42,74 +40,60 @@
                     <li>
                         <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                     </li>
-                    <a th:if="${language}!='EN'" th:href="@{/categories}"><i class="fa fa-globe" aria-hidden="true"></i></a>
-                    <a th:if="${language}=='EN'" th:href="@{/категории}"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                    <li>
+                        <a th:if="${language}!='EN'" href="/searchMK"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                        <a th:if="${language}=='EN'" href="/search"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                    </li>
                     <li>
                         <a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
                     </li>
-
                 </ul>
-                <form th:if="${language}=='EN'"  class="form-inline my-2 my-lg-0" th:method="POST" th:action="@{/home}">
-                    <input  class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search" >
+                <form th:if="${language}!='EN'"class="form-inline my-2 my-lg-0" th:method="POST" >
 
-                    <input  th:if="${language}=='EN'" class="btn btn-outline-warning my-2 my-sm-0 " type="submit" value="Search"></input>
-
-
-
+                    <input name="search" class="form-control mr-sm-2" type="search" placeholder="Пребарај" aria-label="Search">
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Пребарај</button>
                 </form>
-                <form th:if="${language}!='EN'" class="form-inline my-2 my-lg-0" th:method="POST" th:action="@{/насловна}">
-                    <input   class="form-control mr-sm-2" name="search" type="search" placeholder="Пребарај" aria-label="Пребарај" >
+                <form th:if="${language}=='EN'"class="form-inline my-2 my-lg-0" th:method="POST" >
+                    <input  name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 
-                    <input   class="btn btn-outline-warning my-2 my-sm-0 " type="submit" value="Пребарај"></input>
-
-
-
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
         </nav>
     </div>
-    <div th:if="${language}=='MK'" class="container">
-            <div class="col-6  " th:each="category,index : ${categories}" th:if="${index.even}">
-                <a th:href="@{'/категорија/{category}' (category=${category.getName()})}">
 
-                <img class="img-fluid" th:src="${category.getImageUrl()}">
-                <h1 class="sliki_text" th:text="${category.getName()}">Овошје и Зеленчук</h1>
-                </a>
-            </div>
-            <div class="col-6  other"  th:each="category1, index1 : ${categories}" th:if="${index1.odd}">
-                <a th:href="@{'/категорија/{category}' (category=${category1.getName()})}">
-
-                <img  class="img-fluid" th:src="${category1.getImageUrl()}">
-                <h1 class="sliki_text" th:text="${category1.getName()}"></h1>
-                </a>
+    <div  th:if="${products.size()>0}">
+        <div  th:if="${language}=='MK'" th:each="product : ${products}"  class="card" style="width: 18rem;" >
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${product.getName()}">Card title</h5>
+                <div class="card-body">
+                    <p  th:text="${product.getPrice()}+' ден.'"></p>
+                    <p th:text="${product.getMarket().getName()}"></p>
+                </div>
+                <a href="#" class="btn btn-primary">Додади во кошничка</a>
             </div>
         </div>
-    <div th:if="${language}!='MK'" class="container">
-        <div class="col-6  " th:each="category,index : ${categories}" th:if="${index.even}">
-            <a th:href="@{'/category/{category}' (category=${category.getNameEN()})}">
-
-                <img class="img-fluid" th:src="${category.getImageUrl()}">
-                <h1 class="sliki_text" th:text="${category.getNameEN()}"></h1>
-            </a>
-        </div>
-        <div class="col-6  other"  th:each="category1, index1 : ${categories}" th:if="${index1.odd}">
-            <a th:href="@{'/category/{category}' (category=${category1.getNameEN()})}">
-
-                <img  class="img-fluid" th:src="${category1.getImageUrl()}">
-                <h1 class="sliki_text" th:text="${category1.getNameEN()}"></h1>
-            </a>
+        <div  th:if="${products.size()>0}" >
+            <div th:if="${language}!='MK'" th:each="product : ${products}"  class="card" style="width: 18rem;" >
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.getNameEN()}"></h5>
+                    <div class="card-body">
+                        <p  th:text="${product.getPrice()}+' den.'"></p>
+                        <p th:text="${product.getMarket().getNameEN()}"></p>
+                    </div>
+                    <a href="#" class="btn btn-primary">Add to cart</a>
+                </div>
+            </div>
         </div>
     </div>
 
-    </div>
-
-
-
+</div>
 </div>
 <footer>
     <p th:if="${language}!='EN'">Контакт:</p>
     <p th:if="${language}=='EN'">Contact:</p>
-
     <div id="futer" class="container">
         <div class="row">
             <div class="col-xs-6">
