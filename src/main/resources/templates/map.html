@@ -81,9 +81,11 @@
     <div id="description">
 
     </div>
+
     <div id="distances">
 
     </div>
+
 </div>
 
 <footer>
@@ -178,17 +180,35 @@
     }else{
         console.log("you dont have geolocation");
     }
-
+arr=[]
 </script>
 <script th:inline="javascript" th:each="marketloc : ${marketlocs}">
     console.log([[${marketloc.getLatitude()}]])
     marker = new L.marker([ [[${marketloc.getLatitude()}]],[[${marketloc.getLongitude()}]] ],{icon: greenIcon})
         .addTo(map);
     var a=[[${marketloc.getName()}]];
-
-
     marker.bindPopup(a).openPopup();
+    if("geolocation" in navigator){
+        navigator.geolocation.getCurrentPosition(function (position) {
+            console.log(position.coords.latitude, position.coords.longitude);
+            var myIcon = L.icon({
+                iconUrl: 'https://cdn01.vulcanpost.com/wp-uploads/2015/08/Street_View_logo.png',
+                iconSize: [70, 95],
+                popupAnchor: [0, -40],
+            });
+
+
+            var oddalecen = document.getElementById("distances");
+var latitude=[[${marketloc.getLatitude()}]];
+var longitude=[[${marketloc.getLongitude()}]]
+            arr.push("<p>"+[[${marketloc.getName()}]] + " e оддалечен " + parseInt(L.GeometryUtil.distance(map, [position.coords.latitude, position.coords.longitude], [latitude,longitude]) * 7.1) + " Метри</p>");
+
+        })
+    }
+
     console.log(a)
+    console.log(a)
+
 
 
 
@@ -212,11 +232,9 @@
         circle= new   L.circle([position.coords.latitude,position.coords.longitude],100).addTo(map);
          b="You are here"
          marker.bindPopup().openPopup(b);
-            var arr=[];
             // for (var i = 0; i < lat.length; i++) {
             //     marker = new L.marker([lat[i], lan[i]])
             //         .addTo(map)
-
 
 
 
@@ -227,7 +245,10 @@
 
 </script>
 
+<script>
+    document.getElementById("distances").innerHTML=arr;
 
+</script>
 
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
