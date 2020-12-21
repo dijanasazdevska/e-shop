@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="map.css">
-    <title>Категории</title>
+    <title>Мапа</title>
 </head>
 <body>
 <div id="celo">
@@ -142,6 +142,14 @@
     //         var prv_lon=prv[2];
     //         console.log(prv_lat);
     //         console.log(prv_lon);
+    var greenIcon=L.icon({
+        iconUrl:'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
+        iconSize:     [20, 50], // size of the icon
+        shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
 
             var map=L.map('mapata').setView([41.995918301436745,21.431281780330234],14);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -175,12 +183,13 @@
 </script>
 <script th:inline="javascript" th:each="marketloc : ${marketlocs}">
     console.log([[${marketloc.getLatitude()}]])
-    marker = new L.marker([ [[${marketloc.getLatitude()}]],[[${marketloc.getLongitude()}]] ])
+    marker = new L.marker([ [[${marketloc.getLatitude()}]],[[${marketloc.getLongitude()}]] ],{icon: greenIcon})
         .addTo(map);
     var a=[[${marketloc.getName()}]];
 
 
     marker.bindPopup(a).openPopup();
+    console.log(a)
 
 
 
