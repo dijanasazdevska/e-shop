@@ -1,6 +1,6 @@
 package mk.ukim.finki.dians.eshop.model;
 import lombok.Data;
-import jdk.jfr.DataAmount;
+
 
 import javax.persistence.*;
 
