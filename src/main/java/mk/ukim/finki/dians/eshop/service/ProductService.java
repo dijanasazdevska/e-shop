@@ -14,4 +14,5 @@ public interface ProductService {
 
 
     public List<Product> searchByProductsEN(String search);
+    Product searchProductById(Long id);
 }

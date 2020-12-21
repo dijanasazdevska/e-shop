@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/searchMK")
+@RequestMapping(name = "searchController",value = "/searchMK")
 public class SearchController {
 
     private final ProductService productService;

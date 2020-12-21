@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/мапа")
@@ -30,8 +34,8 @@ model.addAttribute("language","MK");
         return "map";
     }
     @PostMapping
-    public String postPage(@RequestParam String  search, HttpServletRequest request){
-        request.getSession().setAttribute("products",productService.searchByProducts(search));
+    public String postPage(@RequestParam String  search, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+request.getSession().setAttribute("products",productService.searchByProducts(search));
         return "redirect:/searchMK";
     }
 

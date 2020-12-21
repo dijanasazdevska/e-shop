@@ -13,9 +13,14 @@ public class Product {
 private String name;
 private Long price;
 private String nameEN;
+private String imageUrl;
 
     public Long getId() {
         return id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public String getName() {
@@ -45,12 +50,13 @@ private Category category;
     private Market market;
 
 
-    public Product(String name,String nameEN, Long price, Category category, Market market) {
+    public Product(String name,String nameEN, Long price, Category category, Market market,String imageUrl) {
         this.name = name;
         this.price = price;
         this.category = category;
         this.market = market;
         this.nameEN=nameEN;
+        this.imageUrl=imageUrl;
     }
 
     public Product() {

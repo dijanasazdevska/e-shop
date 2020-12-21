@@ -2,7 +2,6 @@ package mk.ukim.finki.dians.eshop.web.controller;
 
 import javassist.Translator;
 import mk.ukim.finki.dians.eshop.model.Category;
-import mk.ukim.finki.dians.eshop.model.exceptions.CategoryNotFound;
 import mk.ukim.finki.dians.eshop.service.CategoryService;
 import mk.ukim.finki.dians.eshop.service.ProductService;
 import org.apache.tomcat.util.descriptor.LocalResolver;
