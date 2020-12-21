@@ -160,12 +160,9 @@
         navigator.geolocation.getCurrentPosition(function (position) {
             console.log(position.coords.latitude,position.coords.longitude);
             var myIcon = L.icon({
-                iconUrl: 'https://icon-library.com/images/you-are-here-icon/you-are-here-icon-2.jpg',
+                iconUrl: 'https://cdn01.vulcanpost.com/wp-uploads/2015/08/Street_View_logo.png',
                 iconSize: [70, 95],
-                shadowSize:   [50, 64], // size of the shadow
-                iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                shadowAnchor: [4, 62],  // the same for the shadow
-                popupAnchor:  [-3, -76]
+                popupAnchor: [0, -40],
             });
 
 
