@@ -16,7 +16,7 @@
 
 
     <properties>
-        <java.version>7</java.version>
+        <java.version>1.8</java.version>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
         </property>
     </properties>
