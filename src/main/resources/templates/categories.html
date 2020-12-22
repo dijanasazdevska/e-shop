@@ -165,7 +165,7 @@ viewBox="0 0 1833.33 1136.66"
     </div>
     <div th:if="${language}=='MK'" class="container">
             <div class="col-6  " th:each="category,index : ${categories}" th:if="${index.even}">
-                <a th:href="@{'/категорија/{category}' (category=${category.getName()})}">
+                <a th:href="@{'/категории/{category}' (category=${category.getName()})}">
 
                 <img class="img-fluid" th:src="${category.getImageUrl()}">
                 <h1 class="sliki_text" th:text="${category.getName()}">Овошје и Зеленчук</h1>
