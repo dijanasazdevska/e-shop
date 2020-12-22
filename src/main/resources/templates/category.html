@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="categories.css"/>
+   <link rel="stylesheet" href="/categories.css">
     <title th:if="${language}=='EN'" th:text="${category.getNameEN()}"></title>
     <title th:if="${language}!='EN'" th:text="${category.getName()}"></title>
 
@@ -138,8 +138,8 @@ viewBox="0 0 1833.33 1136.66"
                         <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a th:if="${language}!='EN'"  th:href="@{'/categorу/{category}'  (category=${category.getNameEN()})}"><i class="fa fa-globe" aria-hidden="true"></i></a>
-                        <a th:if="${language}=='EN'" th:href="@{'/категорија/{category}' (category=${category.getName()})}"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                        <a th:if="${language}!='EN'"  th:href="@{'/categories/{category}'  (category=${category.getNameEN()})}"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                        <a th:if="${language}=='EN'" th:href="@{'/категории/{category}' (category=${category.getName()})}"><i class="fa fa-globe" aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
@@ -161,7 +161,7 @@ viewBox="0 0 1833.33 1136.66"
 
     <div  th:if="${products.size()>0}">
     <div  th:if="${language}=='MK'" th:each="product : ${products}"  class="card" style="width: 18rem;" >
-        <img class="card-img-top" src="..." alt="Card image cap">
+        <img class="card-img-top" th:src="${product.getImageUrl()}" >
         <div class="card-body">
             <h5 class="card-title" th:text="${product.getName()}">Card title</h5>
             <div class="card-body">
@@ -173,7 +173,7 @@ viewBox="0 0 1833.33 1136.66"
     </div>
         <div  th:if="${products.size()>0}" >
             <div th:if="${language}!='MK'" th:each="product : ${products}"  class="card" style="width: 18rem;" >
-                <img class="card-img-top" src="..." alt="Card image cap">
+                <img class="card-img-top" th:src="${product.getImageUrl()}" >
                 <div class="card-body">
                     <h5 class="card-title" th:text="${product.getNameEN()}"></h5>
                     <div class="card-body">

@@ -44,7 +44,28 @@ public class CategoriesControllerEN {
 
     }
 
+    @GetMapping("/{category}")
+    public String getCategoryPage(@PathVariable String category, Model model){
 
+        Category category1 = categoryService.findCategoryByNameEN(category);
+
+        model.addAttribute("category", category1);
+        model.addAttribute("products", categoryService.findProductsByCategoryEN(category1.getNameEN()));
+
+
+
+        model.addAttribute("language", "EN");
+
+
+
+        return "category";
+    }
+    @PostMapping("/{category}")
+    public String getResultsCategory( HttpServletRequest request, @PathVariable String category){
+        request.getSession().setAttribute("products",productService.searchByProductsEN(request.getParameter("search")));
+        return "redirect:/search";
+
+    }
 
 
 

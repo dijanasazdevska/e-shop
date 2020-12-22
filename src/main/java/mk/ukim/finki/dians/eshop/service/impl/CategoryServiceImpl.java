@@ -28,22 +28,22 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Product> findProductsByCategory(String name) {
-        return productRepository.findProductByCategory(categoryRepository.findCategoryByName(name).get());
+        return productRepository.findProductByCategory(categoryRepository.findCategoryByName(name));
 
     }
 
     @Override
     public List<Product> findProductsByCategoryEN(String name) {
-        return productRepository.findProductByCategory(categoryRepository.findCategoryByNameEN(name).get());
+        return productRepository.findProductByCategory(categoryRepository.findCategoryByNameEN(name));
     }
 
     @Override
-    public Optional<Category> findCategoryByName(String name) {
+    public Category findCategoryByName(String name) {
         return categoryRepository.findCategoryByName(name.toUpperCase());
     }
 
     @Override
-    public Optional<Category> findCategoryByNameEN(String name) {
+    public Category findCategoryByNameEN(String name) {
         return categoryRepository.findCategoryByNameEN(name.toUpperCase());
     }
 

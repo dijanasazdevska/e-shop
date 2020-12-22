@@ -172,7 +172,7 @@ viewBox="0 0 1833.33 1136.66"
                 </a>
             </div>
             <div class="col-6  other"  th:each="category1, index1 : ${categories}" th:if="${index1.odd}">
-                <a th:href="@{'/категорија/{category}' (category=${category1.getName()})}">
+                <a th:href="@{'/категории/{category}' (category=${category1.getName()})}">
 
                 <img  class="img-fluid" th:src="${category1.getImageUrl()}">
                 <h1 class="sliki_text" th:text="${category1.getName()}"></h1>
@@ -181,7 +181,7 @@ viewBox="0 0 1833.33 1136.66"
         </div>
     <div th:if="${language}!='MK'" class="container">
         <div class="col-6  " th:each="category,index : ${categories}" th:if="${index.even}">
-            <a th:href="@{'/category/{category}' (category=${category.getNameEN()})}">
+            <a th:href="@{'/categories/{category}' (category=${category.getNameEN()})}">
 
                 <img class="img-fluid" th:src="${category.getImageUrl()}">
                 <h1 class="sliki_text" th:text="${category.getNameEN()}"></h1>

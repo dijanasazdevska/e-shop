@@ -135,7 +135,7 @@ viewBox="0 0 1833.33 1136.66"
 
                     </li>
                     <li class="nav-item">
-                        <a th:if="${language}=='EN'" class="nav-link" href="/category">Categories</a>
+                        <a th:if="${language}=='EN'" class="nav-link" href="/categories">Categories</a>
                         <a th:if="${language}!='EN'" class="nav-link" href="/категории">Категории</a>
 
                     </li>
@@ -289,7 +289,7 @@ markets=[]
     console.log([[${marketloc.getLatitude()}]])
     marker = new L.marker([ [[${marketloc.getLatitude()}]],[[${marketloc.getLongitude()}]] ],{icon: greenIcon})
         .addTo(map);
-    var a=[[${marketloc.getName()}]];
+    var a=[[${marketloc.getAddress()}]];
     marker.bindPopup(a).openPopup();
     if("geolocation" in navigator){
         navigator.geolocation.getCurrentPosition(function (position) {

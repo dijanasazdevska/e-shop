@@ -43,8 +43,33 @@ public String getResults(Model model, HttpServletRequest request){
         request.getSession().setAttribute("products",productService.searchByProducts(request.getParameter("search")));
 return "redirect:/searchMK";
 
+
+
 }
 
+    @GetMapping("/{category}")
+    public String getCategoryPage(@PathVariable String category, Model model){
+
+        Category category1 = categoryService.findCategoryByName(category);
+
+        model.addAttribute("category", category1);
+        model.addAttribute("products", categoryService.findProductsByCategory(category1.getName()));
+
+
+
+        model.addAttribute("language", "MK");
+
+
+
+
+        return "category";
+    }
+    @PostMapping("/{category}")
+    public String getResultsCategory( HttpServletRequest request, @PathVariable String category){
+        request.getSession().setAttribute("products",productService.searchByProductsEN(request.getParameter("search")));
+        return "redirect:/searchMK";
+
+    }
 
 
 
