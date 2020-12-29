@@ -2,6 +2,7 @@ package mk.ukim.finki.dians.eshop.web.controller;
 
 import mk.ukim.finki.dians.eshop.model.Category;
 import mk.ukim.finki.dians.eshop.model.User;
+import mk.ukim.finki.dians.eshop.repository.UserRepository;
 import mk.ukim.finki.dians.eshop.service.AuthService;
 import mk.ukim.finki.dians.eshop.service.CategoryService;
 import mk.ukim.finki.dians.eshop.service.ProductService;
@@ -21,11 +22,13 @@ public class CategoryController {
     private final ShoppingCartService shoppingCartService;
     private final ProductService productService;
     private final AuthService authService;
-    public CategoryController(CategoryService categoryService, ShoppingCartService shoppingCartService, ProductService productService, AuthService authService) {
+    private final UserRepository userRepository;
+    public CategoryController(CategoryService categoryService, ShoppingCartService shoppingCartService, ProductService productService, AuthService authService, UserRepository userRepository) {
         this.categoryService = categoryService;
         this.shoppingCartService = shoppingCartService;
         this.productService = productService;
         this.authService = authService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/{category}")
@@ -53,9 +56,11 @@ String c="";
         c=category1.getNameEN();
         }
         model.addAttribute("url","/category/"+c+"?language="+language);
+        if(request.getRemoteUser()!=null){
+            model.addAttribute("user",userRepository.findByUsername(request.getRemoteUser()));
+        }
 
         model.addAttribute("bodyContent","category");
-        model.addAttribute("user",request.getSession().getAttribute("user"));
         return "master-template";
 
 

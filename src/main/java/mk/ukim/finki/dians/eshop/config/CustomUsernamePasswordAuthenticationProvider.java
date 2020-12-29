@@ -1,6 +1,8 @@
 package mk.ukim.finki.dians.eshop.config;
 
+import mk.ukim.finki.dians.eshop.model.User;
 import mk.ukim.finki.dians.eshop.service.AuthService;
+import mk.ukim.finki.dians.eshop.service.UserService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,13 +12,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Component
 public class CustomUsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
-    private final AuthService userService;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public CustomUsernamePasswordAuthenticationProvider(AuthService userService, PasswordEncoder passwordEncoder) {
+    public CustomUsernamePasswordAuthenticationProvider(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }

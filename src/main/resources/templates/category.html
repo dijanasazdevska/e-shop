@@ -24,7 +24,7 @@
             <p  th:text="${product.getPrice()}+' ден.'"></p>
                 <p th:text="${product.getMarket().getName()}"></p>
             </div>
-            <a class="btn btn-primary" onclick="dodadi_vo_koshnichka()" th:href="@{'/add/{category}/{id}'(category=${category.getName()},id=${product.getId()})}">Додади во кошничка</a>
+            <a class="btn btn-primary" onclick="dodadi_vo_koshnichka()" th:href="@{'/add/{category}/{id}'(category=${category.getName()},id=${product.getId()},language='MK')}">Додади во кошничка</a>
         </div>
     </div>
         <div  th:if="${products.size()>0}" >
@@ -36,9 +36,8 @@
                         <p  th:text="${product.getPrice()}+' den.'"></p>
                         <p th:text="${product.getMarket().getNameEN()}"></p>
                     </div>
-                    <a  th:if="${language}==MK" class="btn btn-primary" onclick="add_to_cart()" th:href="@{'/add/{category}/{id}'(category=${category.getName()},id=${product.getId()},language='MK')}">Додади во кошничка</a>
+                    <a  class="btn btn-primary" onclick="add_to_cart()" th:href="@{'/add/{category}/{id}'(category=${category.getName()},id=${product.getId()},language='EN')}">Add to cart</a>
 
-                    <a th:if="${language}!=MK"  class="btn btn-primary" onclick="add_to_cart()" th:href="@{'/add/{category}/{id}'(category=${category.getName()},id=${product.getId()},language='EN')}">Add to cart</a>
                 </div>
             </div>
     </div>

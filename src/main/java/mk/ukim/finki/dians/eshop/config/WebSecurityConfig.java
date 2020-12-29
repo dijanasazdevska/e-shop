@@ -22,17 +22,20 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/home","/login","/register","/category/**","/search","/categories","/map").permitAll()
+        http.csrf().disable().authorizeRequests().antMatchers("/","/login","/register","/category/**","/search","/categories","/map").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/delete/**","/add/**", "/shopping-cart").hasAnyRole()
+                .authorizeRequests().antMatchers("/shopping-cart","/add/**","delete/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/",true)
-                .and()
-                .logout().clearAuthentication(true)
+                .and().
+                logout()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
+              ;
     }
 
     @Override

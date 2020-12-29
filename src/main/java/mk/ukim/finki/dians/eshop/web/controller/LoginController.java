@@ -26,9 +26,6 @@ public class LoginController {
 if(language==null){
     language="MK";
 }
-        if(request.getSession().getAttribute("user")!=null){
-            request.getSession().invalidate();
-        }
         model.addAttribute("language",language);
 
 
@@ -42,7 +39,7 @@ if(language==null){
 
                request.getSession().setAttribute("user",user);
 
-            return "redirect:/home?language="+language;
+            return "redirect:/?language="+language;
         }
         catch (UserNotExistsException | InvalidUserCredentialsException exception){
             model.addAttribute("hasError", true);

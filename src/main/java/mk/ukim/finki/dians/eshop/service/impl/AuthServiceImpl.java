@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
             throw new PasswordsNotMatchException();
         }
 
-        if(userRepository.findUserByUsername(username)!=null){
+        if(userRepository.findByUsername(username).isPresent()){
             throw new UserAlreadyExistsException(username);
         }
 
@@ -51,10 +51,8 @@ public class AuthServiceImpl implements AuthService {
     public User login(String username, String password) {
         if (username == null || username.isEmpty() || password.isEmpty() || password == null)
             throw new InvalidUserCredentialsException();
-        if(userRepository.findUserByUsername(username)==null){
-            throw new UserNotExistsException();
-        }
-        User user = userRepository.findUserByUsername(username);
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotExistsException());
 
         if(!user.getPassword().equals(password))
             throw new InvalidUserCredentialsException();
@@ -74,25 +72,5 @@ public class AuthServiceImpl implements AuthService {
         return shoppingCartRepository.findByUser(user);
     }
 
-    @Override
-    public User addUser() {
-        return userRepository.save(new User());
-    }
 
-    @Override
-    public void changeUser(User user, User newUser) {
-       List<Order> orders= orderRepository.findOrdersByUser(user);
-       ShoppingCart shoppingCart = shoppingCartRepository.findByUser(newUser);
-       for(Order o : orders){
-           o.setShoppingCart(shoppingCartRepository.findByUser(newUser));
-
-       }
-       shoppingCartRepository.delete(shoppingCartRepository.findByUser(user));
-    userRepository.delete(user);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userRepository.findUserByUsername(s);
-    }
 }

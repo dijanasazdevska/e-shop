@@ -3,6 +3,7 @@ package mk.ukim.finki.dians.eshop.web.controller;
 import mk.ukim.finki.dians.eshop.model.exceptions.InvalidArgumentsException;
 import mk.ukim.finki.dians.eshop.model.exceptions.PasswordsNotMatchException;
 import mk.ukim.finki.dians.eshop.service.AuthService;
+import mk.ukim.finki.dians.eshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/register")
 @Controller
 public class RegisterController {
-    private final AuthService authService;
+    private final UserService authService;
 
-    public RegisterController(AuthService authService) {
+    public RegisterController(UserService authService) {
         this.authService = authService;
     }
 
