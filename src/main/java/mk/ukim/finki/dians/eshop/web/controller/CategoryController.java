@@ -55,6 +55,7 @@ String c="";
         model.addAttribute("url","/category/"+c+"?language="+language);
 
         model.addAttribute("bodyContent","category");
+        model.addAttribute("user",request.getSession().getAttribute("user"));
         return "master-template";
 
 

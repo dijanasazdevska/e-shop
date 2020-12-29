@@ -7,7 +7,7 @@
 
 
     <!-- Bootstrap CSS -->
-   
+
     <title th:if="${language}=='EN'" th:text="${category.getNameEN()}"></title>
     <title th:if="${language}!='EN'" th:text="${category.getName()}"></title>
 
@@ -47,11 +47,13 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script th:inline="javascript" type="text/javascript">
     function add_to_cart(){
+        if([[${user}]]!=null)
         alert("The product has been added to your shopping cart.");
     }
     function dodadi_vo_koshnichka(){
+        if([[${user}]]!=null)
         alert("Продуктот е додаден во вашата кошничка.");
 
 
