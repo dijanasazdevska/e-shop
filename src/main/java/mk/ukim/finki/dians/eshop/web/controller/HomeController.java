@@ -30,10 +30,10 @@ public class HomeController {
         model.addAttribute("language",language);
         model.addAttribute("bodyContent","home");
         if(language.equals("MK"))
-        model.addAttribute("newurl","/home?language=EN");
+        model.addAttribute("newurl","/?language=EN");
         else
-            model.addAttribute("newurl","/home?language=MK");
-        model.addAttribute("url","/home?language="+language);
+            model.addAttribute("newurl","/?language=MK");
+        model.addAttribute("url","/?language="+language);
         request.getSession().setAttribute("language",language);
 
         return "master-template";
