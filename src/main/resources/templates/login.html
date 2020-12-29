@@ -54,7 +54,7 @@
                         <div id="register-link" class="text-right">
                             <a  th:if="${language}=='EN'" href="/register?language='EN'" class="text-info">Register here</a>
                             <a th:if="${language}=='MK'" href="/register?language='MK'" class="text-info">Регистрирај се тука</a>
-                            <a  th:if="${language}=='MK'" href="/login?language=EN" class="btn btn-primary">EN</a>
+                            <a  th:if="${language}!='EN'" href="/login?language=EN" class="btn btn-primary">EN</a>
                             <a th:if="${language}=='EN'" href="/login?language=MK" class="btn btn-primary ">MK</a>
 
 
