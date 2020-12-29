@@ -76,9 +76,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <executable>
-                        <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
-                    </executable>
                 </configuration>
             </plugin>
             <plugin>
