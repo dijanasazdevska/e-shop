@@ -1,0 +1,29 @@
+
+<div id="celo" xmlns:th="http://www.w3.org/1999/xhtml" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{(${bodyContent})+'.css'}">
+    <div id="container" th:include="fragments/header"></div>
+    <div th:replace="${bodyContent}"></div>
+    <div th:replace="fragments/footer"></div>
+
+
+
+
+    <script th:inline="javascript" type="text/javascript">
+        if([[${bodyContent}]]==="home"){
+            document.getElementsByClassName("nav-item")[0].classList.add("active");
+        }
+        else if([[${bodyContent}]]==="map"){
+            document.getElementsByClassName("nav-item")[2].classList.add("active");
+
+        }
+        else{
+            document.getElementsByClassName("nav-item")[1].classList.add("active");
+
+
+        }
+    </script>
+</div>
+
+

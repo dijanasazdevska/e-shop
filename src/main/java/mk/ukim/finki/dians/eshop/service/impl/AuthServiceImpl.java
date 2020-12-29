@@ -1,21 +1,32 @@
 package mk.ukim.finki.dians.eshop.service.impl;
 
+import mk.ukim.finki.dians.eshop.model.Order;
 import mk.ukim.finki.dians.eshop.model.ShoppingCart;
 import mk.ukim.finki.dians.eshop.model.User;
 import mk.ukim.finki.dians.eshop.model.exceptions.*;
+import mk.ukim.finki.dians.eshop.repository.OrderRepository;
 import mk.ukim.finki.dians.eshop.repository.ShoppingCartRepository;
 import mk.ukim.finki.dians.eshop.repository.UserRepository;
 import mk.ukim.finki.dians.eshop.service.AuthService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
+    private final OrderRepository orderRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository) {
+    public AuthServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.shoppingCartRepository = shoppingCartRepository;
+        this.orderRepository = orderRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
             throw new UserAlreadyExistsException(username);
         }
 
-        return userRepository.save(new User(username,password,name,surname));
+        return userRepository.save(new User(username,passwordEncoder.encode(password),name,surname));
     }
 
     @Override
@@ -63,4 +74,25 @@ public class AuthServiceImpl implements AuthService {
         return shoppingCartRepository.findByUser(user);
     }
 
+    @Override
+    public User addUser() {
+        return userRepository.save(new User());
+    }
+
+    @Override
+    public void changeUser(User user, User newUser) {
+       List<Order> orders= orderRepository.findOrdersByUser(user);
+       ShoppingCart shoppingCart = shoppingCartRepository.findByUser(newUser);
+       for(Order o : orders){
+           o.setShoppingCart(shoppingCartRepository.findByUser(newUser));
+
+       }
+       shoppingCartRepository.delete(shoppingCartRepository.findByUser(user));
+    userRepository.delete(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userRepository.findUserByUsername(s);
+    }
 }

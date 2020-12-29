@@ -31,6 +31,15 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteAll();
     }
 
+    @Override
+    public List<Order> findOrdersByUser(User user) {
+        return orderRepository.findOrdersByUser(user);
+    }
+
+    @Override
+    public void deleteOrder(Long id) {
+         orderRepository.delete(orderRepository.findById(id).get());
+    }
 
 
     @Override

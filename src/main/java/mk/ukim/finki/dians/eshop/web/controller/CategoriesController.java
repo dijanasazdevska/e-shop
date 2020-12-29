@@ -1,75 +1,65 @@
 package mk.ukim.finki.dians.eshop.web.controller;
 
-import javassist.Translator;
 import mk.ukim.finki.dians.eshop.model.Category;
-import mk.ukim.finki.dians.eshop.model.Product;
+import mk.ukim.finki.dians.eshop.model.User;
 import mk.ukim.finki.dians.eshop.service.CategoryService;
 import mk.ukim.finki.dians.eshop.service.ProductService;
-import org.apache.tomcat.util.descriptor.LocalResolver;
+import mk.ukim.finki.dians.eshop.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
-@RequestMapping("/категории")
+@RequestMapping("/categories")
 public class CategoriesController {
 
     private final CategoryService categoryService;
     private final ProductService productService;
+    private final ShoppingCartService shoppingCartService;
 
-    public CategoriesController(CategoryService categoryService, ProductService productService) {
+    public CategoriesController(CategoryService categoryService, ProductService productService, ShoppingCartService shoppingCartService) {
         this.categoryService = categoryService;
         this.productService = productService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @GetMapping
-    public String getPage(Model model,HttpServletRequest request){
-        model.addAttribute("language","MK");
+    public String getPage(@RequestParam(required = false) String language, Model model,HttpServletRequest request){
+        if(language==null){
+            language="MK";
+        }
+        model.addAttribute("language",language);
         model.addAttribute("categories",categoryService.listAll());
-        return "categories";
+       if(language.equals("MK")){
+           model.addAttribute("newurl","/categories?language=EN");
+
+       }
+       else{
+           model.addAttribute("newurl","/categories?language=MK");
+       }
+        model.addAttribute("url","/categories?language="+language);
+
+        model.addAttribute("bodyContent","categories");
+        return "master-template";
 
 
 
 }
 @PostMapping
-public String getResults(Model model, HttpServletRequest request){
+public String getResults(@RequestParam String language, Model model, HttpServletRequest request){
 
         request.getSession().setAttribute("products",productService.searchByProducts(request.getParameter("search")));
-return "redirect:/searchMK";
+return "redirect:/search?language="+language;
 
 
 
 }
 
-    @GetMapping("/{category}")
-    public String getCategoryPage(@PathVariable String category, Model model){
 
-        Category category1 = categoryService.findCategoryByName(category);
-
-        model.addAttribute("category", category1);
-        model.addAttribute("products", categoryService.findProductsByCategory(category1.getName()));
-
-
-
-        model.addAttribute("language", "MK");
-
-
-
-
-        return "category";
-    }
-    @PostMapping("/{category}")
-    public String getResultsCategory( HttpServletRequest request, @PathVariable String category){
-        request.getSession().setAttribute("products",productService.searchByProductsEN(request.getParameter("search")));
-        return "redirect:/searchMK";
-
-    }
 
 
 

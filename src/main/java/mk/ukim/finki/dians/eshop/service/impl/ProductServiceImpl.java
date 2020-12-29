@@ -43,6 +43,15 @@ public class ProductServiceImpl implements ProductService {
 
 
     }
+    @Override
+    public List<Product> searchByProductsByAllNames(String text){
+        List<Product> search = searchByProducts(text);
+        List<Product> search1=searchByProductsEN(text);
+        if(search1.isEmpty())
+            return search;
+        else
+            return search1;
+    }
 
     @Override
     public Product searchProductById(Long id) {

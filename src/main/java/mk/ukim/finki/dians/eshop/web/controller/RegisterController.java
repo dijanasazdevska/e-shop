@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RequestMapping("/регистрирање")
+@RequestMapping("/register")
 @Controller
 public class RegisterController {
     private final AuthService authService;
@@ -22,16 +22,22 @@ public class RegisterController {
     }
 
     @GetMapping
-    public String getRegisterPage(){
+    public String getRegisterPage(@RequestParam(required = false) String language, Model model){
+        if(language==null){
+            language="MK";
+        }
+        model.addAttribute("language",language);
         return  "register";
     }
 
     @PostMapping
-    public String register(HttpServletRequest request, Model model, @RequestParam String name, @RequestParam String surname, @RequestParam String username, @RequestParam String password, @RequestParam String repeatPassword ){
-
+    public String register(HttpServletRequest request, Model model, @RequestParam String name, @RequestParam String surname, @RequestParam String username, @RequestParam String password, @RequestParam String repeatPassword,@RequestParam(required = false) String language ){
+if(language==null){
+    language="MK";
+}
         try {
             authService.register(username, password, repeatPassword, name, surname);
-            return "redirect:/најава";
+            return "redirect:/login?language="+language;
 
         }
         catch (InvalidArgumentsException | PasswordsNotMatchException ex){

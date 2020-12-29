@@ -10,8 +10,9 @@ public interface CategoryService {
 List<Category> listAll();
 List<Product> findProductsByCategory(String name);
 List<Product> findProductsByCategoryEN(String name);
-Category findCategoryByName(String name);
+Category findCategoryByNameMK(String name);
 Category findCategoryByNameEN(String name);
+Category findCategoryByName(String language,String name);
 
 
 }

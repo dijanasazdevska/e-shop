@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/насловна")
+@RequestMapping("/home")
 public class HomeController {
     private final MarketService marketService;
     private final ProductService productService;
@@ -23,18 +23,27 @@ public class HomeController {
     }
 
     @GetMapping
-    public String getHomePage(Model model){
+    public String getHomePage(@RequestParam(required = false) String language, Model model,HttpServletRequest request){
+        if(language==null)
+            language="MK";
         model.addAttribute("markets",marketService.findAll());
-        model.addAttribute("language","MK");
+        model.addAttribute("language",language);
+        model.addAttribute("bodyContent","home");
+        if(language.equals("MK"))
+        model.addAttribute("newurl","/home?language=EN");
+        else
+            model.addAttribute("newurl","/home?language=MK");
+        model.addAttribute("url","/home?language="+language);
+        request.getSession().setAttribute("language",language);
 
-        return "home";
+        return "master-template";
     }
     @PostMapping
-    public String search( @RequestParam String search, HttpServletRequest request){
+    public String search(@RequestParam String language, @RequestParam String search, HttpServletRequest request){
 
 
         request.getSession().setAttribute("products",productService.searchByProducts(search));
-        return "redirect:/searchMK";
+        return "redirect:/search?language="+language;
 
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping(name = "searchController",value = "/searchMK")
+@RequestMapping(name = "searchController",value = "/search")
 public class SearchController {
 
     private final ProductService productService;
@@ -21,14 +21,28 @@ public class SearchController {
     }
 
     @GetMapping
-    public String getSearch(Model model, HttpServletRequest request){
+    public String getSearch(Model model, HttpServletRequest request,@RequestParam  String language ){
+
         model.addAttribute("products",request.getSession().getAttribute("products"));
-        model.addAttribute("language","MK");
-     return "search"  ;
+        model.addAttribute("language",language);
+        model.addAttribute("bodyContent","search");
+        if(language.equals("MK")){
+            model.addAttribute("newurl","/search?language=EN");
+            model.addAttribute("url","/search?language=MK");
+
+        }
+        else{
+            model.addAttribute("newurl","/search?language=MK");
+            model.addAttribute("url","/search?language=EN");
+
+        }
+        request.getSession().setAttribute("language",language);
+        return "master-template";
     }
     @PostMapping
-    public String postSearch(@RequestParam String search , HttpServletRequest request){
-        request.getSession().setAttribute("products",productService.searchByProducts(search));
-        return "redirect:/searchMK";
+    public String postSearch(@RequestParam String search , HttpServletRequest request,@RequestParam  String language){
+        request.getSession().setAttribute("products",productService.searchByProductsByAllNames(search));
+        return "redirect:/search?language="+language;
+
     }
 }

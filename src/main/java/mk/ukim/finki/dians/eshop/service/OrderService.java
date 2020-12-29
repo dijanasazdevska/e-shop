@@ -11,4 +11,6 @@ public interface OrderService {
     Order placeOrder(ShoppingCart cart, Product product, User user);
 List<Order> listAll();
 public void clearOrders();
+List<Order> findOrdersByUser(User user);
+void deleteOrder(Long id);
 }

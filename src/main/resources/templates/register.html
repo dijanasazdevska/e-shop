@@ -17,25 +17,39 @@
     <div id="register-column" class="col-md-6">
         <div id="register-box" class="col-md-12">
             <form id="register-form" class="form" th:action="@{/register}" th:method="post">
-                <h3 class="text-center text-info">Register</h3>
+                <h3 th:if="${language}=='EN'" class="text-center text-info">Register</h3>
+                <h3 th:if="${language}=='MK'" class="text-center text-info">Регистрирај се</h3>
+
                 <div class="form-group">
-                    <label for="name" class="text-info">Name:</label><br>
+                    <label th:if="${language}!='EN'" for="name" class="text-info">Име:</label>
+                    <label th:if="${language}=='EN'" for="name" class="text-info">Name:</label>
+
                     <input type="text" name="name" id="name" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="surname" class="text-info">Surname:</label><br>
+                    <label th:if="${language}=='EN'" for="surname" class="text-info">Surname:</label>
+                    <label th:if="${language}!='EN'" for="surname" class="text-info">Презиме:</label>
+
                     <input type="text" name="surname" id="surname" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="username" class="text-info">Username:</label><br>
+                    <label th:if="${language}!='EN'" for="username" class="text-info">Корисничко име:</label>
+                    <label th:if="${language}=='EN'" for="username" class="text-info">Username:</label><br>
+
                     <input type="text" name="username" id="username" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="password" class="text-info">Password:</label><br>
+
+                    <label th:if="${language}=='EN'" for="password" class="text-info">Password:</label>
+                    <label th:if="${language}!='EN'" for="password" class="text-info">Лозинка:</label>
+
+
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="repeatPassword" class="text-info">Repeat Password:</label><br>
+                    <label th:if="${language}!='EN'" for="repeatPassword" class="text-info">Повтори лозинка:</label>
+                    <label th:if="${language}=='EN'" for="repeatPassword" class="text-info">Repeat Password:</label>
+
                     <input type="password" name="repeatPassword" id="repeatPassword" class="form-control">
                 </div>
                 <div th:text="${error}" style="color:darkturquoise"></div>

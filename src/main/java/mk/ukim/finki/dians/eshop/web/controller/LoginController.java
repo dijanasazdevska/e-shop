@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/најава")
+@RequestMapping("/login")
 public class LoginController {
     private final AuthService authService;
 
@@ -22,26 +22,31 @@ public class LoginController {
         this.authService = authService;
     }
     @GetMapping
-    public String getLoginPage(HttpServletRequest request){
+    public String getLoginPage(HttpServletRequest request,@RequestParam(required = false) String language,Model model){
+if(language==null){
+    language="MK";
+}
         if(request.getSession().getAttribute("user")!=null){
             request.getSession().invalidate();
         }
+        model.addAttribute("language",language);
 
 
         return "login";
     }
     @PostMapping
-    public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request, HttpServletRequest response, Model model){
-        User user =null;
+    public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request, HttpServletRequest response, Model model,@RequestParam(required = false) String language){
+
         try{
-            user= authService.login(username,password);
-            request.getSession().setAttribute("user",user);
-            return "redirect:/насловна";
+           User user= authService.login(username,password);
+
+               request.getSession().setAttribute("user",user);
+
+            return "redirect:/home?language="+language;
         }
         catch (UserNotExistsException | InvalidUserCredentialsException exception){
             model.addAttribute("hasError", true);
             model.addAttribute("error", exception.getMessage());
-            request.getSession().setAttribute("user",user);
             return "login";
         }
 

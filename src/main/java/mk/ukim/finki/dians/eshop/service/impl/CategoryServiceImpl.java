@@ -6,7 +6,6 @@ import mk.ukim.finki.dians.eshop.repository.CategoryRepository;
 import mk.ukim.finki.dians.eshop.repository.ProductRepository;
 import mk.ukim.finki.dians.eshop.service.CategoryService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Product> findProductsByCategory(String name) {
-        return productRepository.findProductByCategory(categoryRepository.findCategoryByName(name));
+       List<Product> products=productRepository.findProductByCategory(categoryRepository.findCategoryByName(name));
+       List<Product> productEN=productRepository.findProductByCategory(categoryRepository.findCategoryByNameEN(name));
+   if(!products.isEmpty())
+       return products;
+   else
+       return productEN;
 
     }
 
@@ -38,13 +42,27 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findCategoryByName(String name) {
-        return categoryRepository.findCategoryByName(name.toUpperCase());
+    public Category findCategoryByNameMK(String name) {
+        return categoryRepository.findCategoryByName(name);
     }
+
+
+
 
     @Override
     public Category findCategoryByNameEN(String name) {
+
         return categoryRepository.findCategoryByNameEN(name.toUpperCase());
+    }
+
+    @Override
+    public Category findCategoryByName(String language, String name) {
+        if(language.equals("MK")){
+            return this.findCategoryByNameMK(name);
+        }
+        else{
+            return this.findCategoryByNameEN(name);
+        }
     }
 
 

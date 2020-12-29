@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/мапа")
+@RequestMapping("/map")
 public class MapController {
     private final MarketLocationService marketLocationService;
     private final ProductService productService;
@@ -28,15 +28,28 @@ public class MapController {
     }
 
     @GetMapping
-    public String getPage( Model model){
+    public String getPage(@RequestParam(required = false) String language, Model model,HttpServletRequest request){
+        if(language==null)
+            language="MK";
         model.addAttribute("marketlocs",marketLocationService.findAll());
-model.addAttribute("language","MK");
-        return "map";
+model.addAttribute("language",language);
+model.addAttribute("bodyContent","map");
+model.addAttribute("url","/map?language="+language);
+if(language.equals("MK")){
+    model.addAttribute("newurl","/map?language=EN");
+
+}
+else{
+    model.addAttribute("newurl","/map?language=MK");
+
+}
+request.getSession().setAttribute("language",language);
+        return "master-template";
     }
     @PostMapping
-    public String postPage(@RequestParam String  search, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String postPage(@RequestParam String language,@RequestParam String  search, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 request.getSession().setAttribute("products",productService.searchByProducts(search));
-        return "redirect:/searchMK";
+        return "redirect:/search?language="+language;
     }
 
 
