@@ -18,38 +18,43 @@
 
 
     <div th:if="${language}=='MK'" class="container">
-            <div class="col-6  " th:each="category,index : ${categories}" th:if="${index.even}">
+        <div class="row">
+            <div class="col-lg-6  " th:each="category,index : ${categories}" th:if="${index.even}">
                 <a th:href="@{'/category/{category}' (category=${category.getName()})}">
 
-                <img class="img-fluid" th:src="${category.getImageUrl()}">
+                <img th:src="${category.getImageUrl()}">
                 <h1 class="sliki_text" th:text="${category.getName()}">Овошје и Зеленчук</h1>
                 </a>
             </div>
-            <div class="col-6  other"  th:each="category1, index1 : ${categories}" th:if="${index1.odd}">
+
+            <div class="col-lg-6  other"  th:each="category1, index1 : ${categories}" th:if="${index1.odd}">
                 <a th:href="@{'/category/{category}' (category=${category1.getName()},language='MK')}">
 
-                <img  class="img-fluid" th:src="${category1.getImageUrl()}">
+                <img   th:src="${category1.getImageUrl()}">
                 <h1 class="sliki_text" th:text="${category1.getName()}"></h1>
                 </a>
             </div>
         </div>
-    <div th:if="${language}!='MK'" class="container">
-        <div class="col-6  " th:each="category,index : ${categories}" th:if="${index.even}">
+    </div>
+
+
+    <div th:if="${language}!='MK'" class="container ">
+        <div class="row">
+        <div class="col-lg-6  " th:each="category,index : ${categories}" th:if="${index.even}">
             <a th:href="@{'/category/{category}' (category=${category.getNameEN()},language='EN')}">
 
-                <img class="img-fluid" th:src="${category.getImageUrl()}">
+                <img  th:src="${category.getImageUrl()}">
                 <h1 class="sliki_text" th:text="${category.getNameEN()}"></h1>
             </a>
         </div>
-        <div class="col-6  other"  th:each="category1, index1 : ${categories}" th:if="${index1.odd}">
+        <div class="col-lg-6  other"  th:each="category1, index1 : ${categories}" th:if="${index1.odd}">
             <a th:href="@{'/category/{category}' (category=${category1.getNameEN()})}">
 
-                <img  class="img-fluid" th:src="${category1.getImageUrl()}">
+                <img  th:src="${category1.getImageUrl()}">
                 <h1 class="sliki_text" th:text="${category1.getNameEN()}"></h1>
             </a>
         </div>
     </div>
-
     </div>
 
 

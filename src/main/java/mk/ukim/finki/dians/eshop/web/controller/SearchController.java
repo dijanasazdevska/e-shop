@@ -1,6 +1,7 @@
 package mk.ukim.finki.dians.eshop.web.controller;
 
 import mk.ukim.finki.dians.eshop.service.ProductService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

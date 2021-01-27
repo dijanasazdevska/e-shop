@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
         if (username == null || username.isEmpty() || password.isEmpty() || password == null)
             throw new InvalidUserCredentialsException();
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotExistsException());
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotExistsException::new);
 
         if(!user.getPassword().equals(password))
             throw new InvalidUserCredentialsException();

@@ -4,6 +4,7 @@ import mk.ukim.finki.dians.eshop.model.User;
 import mk.ukim.finki.dians.eshop.model.exceptions.InvalidUserCredentialsException;
 import mk.ukim.finki.dians.eshop.model.exceptions.UserNotExistsException;
 import mk.ukim.finki.dians.eshop.service.AuthService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-
 @Controller
 @RequestMapping("/login")
 public class LoginController {

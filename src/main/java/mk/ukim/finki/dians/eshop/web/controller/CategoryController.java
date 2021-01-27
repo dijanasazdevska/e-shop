@@ -7,6 +7,7 @@ import mk.ukim.finki.dians.eshop.service.AuthService;
 import mk.ukim.finki.dians.eshop.service.CategoryService;
 import mk.ukim.finki.dians.eshop.service.ProductService;
 import mk.ukim.finki.dians.eshop.service.ShoppingCartService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 @Controller
 @RequestMapping("/category")
 public class CategoryController {

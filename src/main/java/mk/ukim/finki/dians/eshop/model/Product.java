@@ -1,4 +1,5 @@
 package mk.ukim.finki.dians.eshop.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 
@@ -9,10 +10,12 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 private String name;
 private Long price;
 private String nameEN;
+@JsonIgnore
 private String imageUrl;
 
     public Long getId() {
@@ -42,10 +45,10 @@ private String imageUrl;
     public Market getMarket() {
         return market;
     }
-
+@JsonIgnore
     @ManyToOne
 private Category category;
-
+@JsonIgnore
 @ManyToOne
     private Market market;
 

@@ -8,6 +8,8 @@ import java.util.List;
 @Repository
 public interface MarketRepository  extends JpaRepository<Market,Long> {
 List<Market> findMarketsByName(String name);
+List<Market> findMarketByNameOrNameEN(String name,String name1);
+Market findMarketByName(String name);
 
 
 

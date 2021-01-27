@@ -15,9 +15,9 @@
 <body>
 
 
-    <div  th:if="${products.size()>0}">
-    <div  th:if="${language}=='MK'" th:each="product : ${products}"  class="card" style="width: 18rem;" >
-        <img class="card-img-top" th:src="${product.getImageUrl()}" >
+    <div  th:if="${products.size()>0}" class="card-deck">
+    <div  th:if="${language}=='MK'" th:each="product : ${products}"  class="card " style="min-width: 25%; max-width: 50%;" >
+        <img class="card-img-top img-fluid" th:src="${product.getImageUrl()}" >
         <div class="card-body">
             <h5 class="card-title" th:text="${product.getName()}">Card title</h5>
             <div class="card-body">
@@ -28,8 +28,8 @@
         </div>
     </div>
         <div  th:if="${products.size()>0}" >
-            <div th:if="${language}!='MK'" th:each="product : ${products}"  class="card" style="width: 18rem;" >
-                <img class="card-img-top" th:src="${product.getImageUrl()}" >
+            <div th:if="${language}!='MK'" th:each="product : ${products}"  class="card"  style="min-width: 25%; max-width: 50%;" >
+                <img class="card-img-top img-fluid" th:src="${product.getImageUrl()}" >
                 <div class="card-body">
                     <h5 class="card-title" th:text="${product.getNameEN()}"></h5>
                     <div class="card-body">

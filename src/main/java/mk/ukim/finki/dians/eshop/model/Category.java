@@ -1,5 +1,6 @@
 package mk.ukim.finki.dians.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,11 +12,14 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private String name;
+    @JsonIgnore
     private String imageUrl;
     private String nameEN;
     @OneToMany(mappedBy="category")
+    @JsonIgnore
     List<Product> products;
 
     public Category(String name, String imageUrl,String nameEN) {
@@ -43,5 +47,14 @@ public class Category {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                ", nameEN='" + nameEN + '\'' +
+                '}';
     }
 }

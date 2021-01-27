@@ -1,5 +1,6 @@
 package mk.ukim.finki.dians.eshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 public class MarketLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private float latitude;
     private float longitude;
@@ -16,6 +18,7 @@ public class MarketLocation {
     private String nameEN;
     private String address;
     @ManyToOne
+    @JsonIgnore
     private Market market;
 
 
