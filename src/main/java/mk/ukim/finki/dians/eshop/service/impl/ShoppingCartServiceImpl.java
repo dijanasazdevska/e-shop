@@ -14,12 +14,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final OrderRepository orderRepository;
 
-
+    //Constructor
     public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.orderRepository = orderRepository;
     }
 
+    //Se generira narachka na tekovniot korisnik so izbranite produkti.
     @Override
     public Order saveOrder(User user, Product product) {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user);
@@ -36,6 +37,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     }
 
+    //Se dobiva koshnicka od narachki za odredeniot korisnik.
     @Override
     public ShoppingCart findShoppingCartForUser(User user) {
         return shoppingCartRepository.findByUser(user);
