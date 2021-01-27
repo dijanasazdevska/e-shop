@@ -2,7 +2,6 @@ package mk.ukim.finki.dians.eshop.web.controller;
 
 import mk.ukim.finki.dians.eshop.model.exceptions.InvalidArgumentsException;
 import mk.ukim.finki.dians.eshop.model.exceptions.PasswordsNotMatchException;
-import mk.ukim.finki.dians.eshop.service.AuthService;
 import mk.ukim.finki.dians.eshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/register")
 @Controller
 public class RegisterController {
-    private final UserService authService;
+    //Se generira eden i edinstven interface za registracija.
+    private final UserService userService;
 
-    public RegisterController(UserService authService) {
-        this.authService = authService;
+    //Constructor
+    public RegisterController(UserService userService) {
+        this.userService = userService;
     }
 
+    //So ovoj metod se dobiva stranata za registriranje.
     @GetMapping
     public String getRegisterPage(@RequestParam(required = false) String language, Model model){
         if(language==null){
@@ -31,13 +33,15 @@ public class RegisterController {
         return  "register";
     }
 
+    //So ovoj metod se dobiva login stranata po uspesna registracijata na korisnikot na soodvetniot jazik.
+    //Dokolku e neuspesen obidot za registracija se prikazuva error.
     @PostMapping
     public String register(HttpServletRequest request, Model model, @RequestParam String name, @RequestParam String surname, @RequestParam String username, @RequestParam String password, @RequestParam String repeatPassword,@RequestParam(required = false) String language ){
 if(language==null){
     language="MK";
 }
         try {
-            authService.register(username, password, repeatPassword, name, surname);
+            userService.register(username, password, repeatPassword, name, surname);
             return "redirect:/login?language="+language;
 
         }
