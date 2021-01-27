@@ -1,6 +1,5 @@
 package mk.ukim.finki.dians.eshop.service.impl;
 
-import mk.ukim.finki.dians.eshop.model.Order;
 import mk.ukim.finki.dians.eshop.model.ShoppingCart;
 import mk.ukim.finki.dians.eshop.model.User;
 import mk.ukim.finki.dians.eshop.model.exceptions.*;
@@ -8,8 +7,6 @@ import mk.ukim.finki.dians.eshop.repository.OrderRepository;
 import mk.ukim.finki.dians.eshop.repository.ShoppingCartRepository;
 import mk.ukim.finki.dians.eshop.repository.UserRepository;
 import mk.ukim.finki.dians.eshop.service.AuthService;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +19,7 @@ public class AuthServiceImpl implements AuthService {
     private final OrderRepository orderRepository;
     private final PasswordEncoder passwordEncoder;
 
+    //Constructor
     public AuthServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.shoppingCartRepository = shoppingCartRepository;
@@ -29,6 +27,9 @@ public class AuthServiceImpl implements AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    //So ovoj metod se vrsi registracija na nov korisnik.
+    //Potrebni se 5 informacii od korisnikot. Vnesenite informacii se proveruvaat dali se postecki i validni.
+    //Vnesenite informacii dokolku se validni se zacuvuvaat vo userRepository.
     @Override
     public User register(String username, String password, String repeatedPassword, String name, String surname) {
 
@@ -47,6 +48,8 @@ public class AuthServiceImpl implements AuthService {
         return userRepository.save(new User(username,passwordEncoder.encode(password),name,surname));
     }
 
+    //So ovoj metod se vrsi najava na vekje postecki korisnik.
+    //Potrebni se 2 informacii od korisnikot, koi se proveruvaat dali se postecki i validni.
     @Override
     public User login(String username, String password) {
         if (username == null || username.isEmpty() || password.isEmpty() || password == null)

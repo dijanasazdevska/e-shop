@@ -16,11 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+    //Se generira eden i edinstven interface za najava, registracija i kosnicka za najaveniot korisnik.
     private final AuthService authService;
 
+    //Constructor
     public LoginController(AuthService authService) {
         this.authService = authService;
     }
+
+    //So ovoj metod se dobiva stranata za najava.
     @GetMapping
     public String getLoginPage(HttpServletRequest request,@RequestParam(required = false) String language,Model model){
 if(language==null){
@@ -31,6 +35,9 @@ if(language==null){
 
         return "login";
     }
+
+    //So ovoj metod se dobiva Home stranata po uspesna najava na korisnikot na soodvetniot jazik.
+    //Dokolku e neuspesen obidot za najava se prikazuva error.
     @PostMapping
     public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request, HttpServletRequest response, Model model,@RequestParam(required = false) String language){
 
