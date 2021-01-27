@@ -21,35 +21,39 @@ public class MapController {
     private final MarketLocationService marketLocationService;
     private final ProductService productService;
 
-
+    //Constructor
     public MapController(MarketLocationService marketLocationService, ProductService productService) {
         this.marketLocationService = marketLocationService;
         this.productService = productService;
     }
 
     @GetMapping
-    public String getPage(@RequestParam(required = false) String language, Model model,HttpServletRequest request){
-        if(language==null)
-            language="MK";
-        model.addAttribute("marketlocs",marketLocationService.findAll());
-model.addAttribute("language",language);
-model.addAttribute("bodyContent","map");
-model.addAttribute("url","/map?language="+language);
-if(language.equals("MK")){
-    model.addAttribute("newurl","/map?language=EN");
+    public String getPage(@RequestParam(required = false) String language, Model model, HttpServletRequest request) {
+        //Jazikot po default da e na makedonski
+        if (language == null)
+            language = "MK";
+        //Dodavanje atributi za lokacii,jazik,sodrzina,url
+        model.addAttribute("marketlocs", marketLocationService.findAll());
+        model.addAttribute("language", language);
+        model.addAttribute("bodyContent", "map");
+        model.addAttribute("url", "/map?language=" + language);
+        if (language.equals("MK")) {
+            model.addAttribute("newurl", "/map?language=EN");
 
-}
-else{
-    model.addAttribute("newurl","/map?language=MK");
+        } else {
+            model.addAttribute("newurl", "/map?language=MK");
 
-}
-request.getSession().setAttribute("language",language);
+        }
+        //Setiranje na atributot(jazikot) spored toa koj jazik e odbran/selektiran(MK ili EN)
+        request.getSession().setAttribute("language", language);
         return "master-template";
     }
+
     @PostMapping
-    public String postPage(@RequestParam String language,@RequestParam String  search, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-request.getSession().setAttribute("products",productService.searchByProducts(search));
-        return "redirect:/search?language="+language;
+    public String postPage(@RequestParam String language, @RequestParam String search, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession().setAttribute("products", productService.searchByProducts(search));
+        //Prenasocuvanje spored toa koj jazik e odbran/selektiran(MK ili EN)
+        return "redirect:/search?language=" + language;
     }
 
 

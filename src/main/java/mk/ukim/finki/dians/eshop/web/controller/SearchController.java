@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchController {
 
     private final ProductService productService;
-
+    //Constructor
     public SearchController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping
     public String getSearch(Model model, HttpServletRequest request,@RequestParam  String language ){
-
+        //Dodavanje atributi za produkti,jazik,sodrzina
         model.addAttribute("products",request.getSession().getAttribute("products"));
         model.addAttribute("language",language);
         model.addAttribute("bodyContent","search");
@@ -37,12 +37,14 @@ public class SearchController {
             model.addAttribute("url","/search?language=EN");
 
         }
+        //Setiranje na atributot(jazikot) spored toa koj jazik e odbran/selektiran(MK ili EN)
         request.getSession().setAttribute("language",language);
         return "master-template";
     }
     @PostMapping
     public String postSearch(@RequestParam String search , HttpServletRequest request,@RequestParam  String language){
         request.getSession().setAttribute("products",productService.searchByProductsByAllNames(search));
+        //Prenasocuvanje spored toa koj jazik e odbran/selektiran(MK ili EN)
         return "redirect:/search?language="+language;
 
     }
