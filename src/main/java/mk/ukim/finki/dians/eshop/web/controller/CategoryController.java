@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+/** ovoj kontroler ima za cel da prebara odreden produkt vo izbranata kategorija.
+ * isto taka se prebaruva i na makedonski i na angliski jazik, vo zavisnost sto korisnikot odbral.
+ */
+
 @Controller
 @RequestMapping("/category")
 public class CategoryController {

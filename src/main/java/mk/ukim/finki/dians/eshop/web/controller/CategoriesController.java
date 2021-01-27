@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+
+/** Vo CategoriesController se naogjaat servisi za kategotija,produkt i koshnickata.
+ * Ovoj kontroler gi "kontrolira" kategoriite spored odbraniot jazik(makedonski i angliski) vo delot kaj sto se prebaruvaat istite.
+ */
+
 @Controller
 @RequestMapping("/categories")
 public class CategoriesController {

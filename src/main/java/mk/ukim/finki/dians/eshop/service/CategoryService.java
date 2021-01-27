@@ -6,6 +6,10 @@ import mk.ukim.finki.dians.eshop.model.Product;
 import java.util.List;
 import java.util.Optional;
 
+/** Interfejsot CategoryService sodrzi listi od kategorii i produkti.
+ * Ima za cel prvo da ja pronajde baranata kategorija, spored odbraniot jazik (na makedonski ili na angliski) ,
+ * pa potoa da prebara kategorii spored ime na soodvetniot jazik sto e odbran.
+ */
 public interface CategoryService {
 List<Category> listAll();
 List<Product> findProductsByCategory(String name);
