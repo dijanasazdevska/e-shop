@@ -10,7 +10,9 @@ import mk.ukim.finki.dians.eshop.service.AuthService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+/**
+ * Service za Avtentikacijata.
+ */
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -19,7 +21,13 @@ public class AuthServiceImpl implements AuthService {
     private final OrderRepository orderRepository;
     private final PasswordEncoder passwordEncoder;
 
-    //Constructor
+    /**
+     * Constructor so argumenti za AuthServiceImpl.
+     * @param userRepository - interfejs za pronaogjanje na eden korisnik.
+     * @param shoppingCartRepository - interfejs za zacuvuvanje i pronaogjanje na naracka vo odredena kosnicka.
+     * @param orderRepository - interfejs za site uslugi potrebni za edna naracka.
+     * @param passwordEncoder - promenliva koja ja enkriptira lozinkata pred da se zacuva vo bazata.
+     */
     public AuthServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.shoppingCartRepository = shoppingCartRepository;
@@ -27,9 +35,17 @@ public class AuthServiceImpl implements AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //So ovoj metod se vrsi registracija na nov korisnik.
-    //Potrebni se 5 informacii od korisnikot. Vnesenite informacii se proveruvaat dali se postecki i validni.
-    //Vnesenite informacii dokolku se validni se zacuvuvaat vo userRepository.
+    /**
+     * So ovoj metod se vrsi registracija na nov korisnik,
+     * Potrebni se 5 informacii od korisnikot. Vnesenite informacii se proveruvaat dali se postecki i validni,
+     * Vnesenite informacii dokolku se validni se zacuvuvaat vo userRepository.
+     * @param username - pole kade se cuva privremeno korisnickoto ime na korisnikot.
+     * @param password - pole kade se cuva privremeno passwordot na korisnikot.
+     * @param repeatedPassword - pole za potvrda na passwordot.
+     * @param name - pole kade se cuva privremeno imeto na korisnikot.
+     * @param surname - pole kade se cuva privremeno prezimeto na korisnikot.
+     * @return da zacuvuva nov korisnik vo bazata.
+     */
     @Override
     public User register(String username, String password, String repeatedPassword, String name, String surname) {
 
@@ -48,8 +64,13 @@ public class AuthServiceImpl implements AuthService {
         return userRepository.save(new User(username,passwordEncoder.encode(password),name,surname));
     }
 
-    //So ovoj metod se vrsi najava na vekje postecki korisnik.
-    //Potrebni se 2 informacii od korisnikot, koi se proveruvaat dali se postecki i validni.
+    /**
+     * So ovoj metod se vrsi najava na vekje postecki korisnik,
+     * Potrebni se 2 informacii od korisnikot, koi se proveruvaat dali se postecki i validni.
+     * @param username - pole kade se cuva privremeno korisnickoto ime na korisnikot.
+     * @param password - pole kade se cuva privremeno passwordot na korisnikot.
+     * @return go vrakja korisnikot.
+     */
     @Override
     public User login(String username, String password) {
         if (username == null || username.isEmpty() || password.isEmpty() || password == null)
@@ -61,9 +82,6 @@ public class AuthServiceImpl implements AuthService {
             throw new InvalidUserCredentialsException();
 
         return user;
-
-
-
     }
 
     @Override
