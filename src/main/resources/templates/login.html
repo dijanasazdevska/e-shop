@@ -22,7 +22,7 @@
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
-                    <form id="login-form" class="form" th:action="@{/login}" th:method="POST">
+                    <form id="login-form" class="form" th:action="@{'/login'(language=${language})}" th:method="POST">
                         <h3 th:if="${language}=='EN'" class="text-center text-info">Login</h3>
                         <h3 th:if="${language}=='MK'"class="text-center text-info">Најави се</h3>
 

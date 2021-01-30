@@ -40,7 +40,9 @@ if(language==null){
     //Dokolku e neuspesen obidot za najava se prikazuva error.
     @PostMapping
     public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request, HttpServletRequest response, Model model,@RequestParam(required = false) String language){
-
+if(language==null){
+    language="MK";
+}
         try{
            User user= authService.login(username,password);
 
@@ -51,6 +53,7 @@ if(language==null){
         catch (UserNotExistsException | InvalidUserCredentialsException exception){
             model.addAttribute("hasError", true);
             model.addAttribute("error", exception.getMessage());
+            model.addAttribute("language",language);
             return "login";
         }
 
