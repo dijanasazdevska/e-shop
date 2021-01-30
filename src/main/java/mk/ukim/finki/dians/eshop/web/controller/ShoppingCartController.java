@@ -18,11 +18,18 @@ public class ShoppingCartController {
     private final OrderService orderService;
     //Se generira interfejs za zacuvuvanje i pronaogjanje na narachka vo odredena koshnichka.
     private final ShoppingCartService shoppingCartService;
-    //Se generira eden i ednistven interfejs za prebaruvanje na produkti.
+    //Se generira interfejs za prebaruvanje na produkti.
     private final ProductService productService;
+    //Se generira interfejs za prebaruvanje na korisnici od bazata na korisnici.
     private final UserRepository userRepository;
 
-    //Constructor
+    /**
+     * Konstruktor
+     * @param orderService - interfejs za site uslugi potrebni za edna narachka.
+     * @param shoppingCartService - interfejs za zacuvuvanje i pronaogjanje na narachka vo odredena koshnichka.
+     * @param productService - interfejs za prebaruvanje na produkti.
+     * @param userRepository - interfejs za prebaruvanje na korisnici od bazata na korisnici.
+     */
     public ShoppingCartController(OrderService orderService, ShoppingCartService shoppingCartService, ProductService productService, UserRepository userRepository) {
         this.orderService = orderService;
         this.shoppingCartService = shoppingCartService;
@@ -30,7 +37,13 @@ public class ShoppingCartController {
         this.userRepository = userRepository;
     }
 
-    //Se dobiva strana za pregled na site narachki vo koshnichkata.
+    /**
+     * Se dobiva strana za pregled na site narachki vo koshnichkata.
+     * @param model - Promenliva koja sto gi sodrzi atributite na modelot na stranata.
+     * @param request - HttpServletRequest objekt koj go prenesuva baranjeto za odredena strana do metodot.
+     * @param language - Jazikot na koj sto treba da se prikaze stranata.
+     * @return - Go vrakja glavniot shablon na stranata, preureden spored atributite.
+     */
     @GetMapping("/shopping-cart")
     public String getPage(Model model, HttpServletRequest request, @RequestParam(required = false) String language){
     if(language==null)
@@ -51,7 +64,12 @@ public class ShoppingCartController {
 
     }
 
-    //Metod za brishenje na narachka od koshnichkata spored ID.
+    /**
+     * Metod za brishenje na narachka od koshnichkata spored ID.
+     * @param language - Jazikot na koj sto treba da se prikaze stranata.
+     * @param id - ID broj na narachka koja treba da se izbrishe od koshnichka.
+     * @return - Vrakja preuredena koshnichka posle brishenjeto na narachkata.
+     */
     @GetMapping("/delete/{id}")
     public String deleteFromCart(@RequestParam String language,@PathVariable Long id){
         orderService.deleteOrder(id);
@@ -59,7 +77,14 @@ public class ShoppingCartController {
 
     }
 
-    //Metod za dodavanje na narachka od koshnichkata.
+    /**
+     * Metod za dodavanje na narachka od koshnichkata.
+     * @param language - Jazikot na koj sto treba da se prikaze stranata.
+     * @param id - ID broj na narachka koja treba da se dodade vo koshnichka.
+     * @param category - Kategorijata vo koja spagja produktot.
+     * @param request - HttpServletRequest objekt koj go prenesuva baranjeto za odredena strana do metodot.
+     * @return - Vrakja preuredena koshnichka posle dodavanjeto na narachkata.
+     */
     @RequestMapping("/add/{category}/{id}")
     public String addToCart( @RequestParam  String language, @PathVariable Long id,@PathVariable String category,HttpServletRequest request){
         User user=userRepository.findByUsername(request.getRemoteUser()).get();
@@ -67,7 +92,13 @@ public class ShoppingCartController {
         return "redirect:/category/{category}?language="+language;
     }
 
-    //Se dobiva produkti spored vnesenata vrednost vo poleto za prebaruvanje.
+    /**
+     * Se dobiva produkti spored vnesenata vrednost vo poleto za prebaruvanje.
+     * @param language - Jazikot na koj sto treba da se prikaze stranata.
+     * @param search - String spored koj se prebaruva za produkt.
+     * @param request - HttpServletRequest objekt koj go prenesuva baranjeto za odredena strana do metodot.
+     * @return - Go vrakja rezultatot od prebaruvanjeto.
+     */
     @PostMapping("/shopping-cart")
     public String search(@RequestParam String language, @RequestParam String search, HttpServletRequest request){
 
