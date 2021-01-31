@@ -87,7 +87,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
         }
-        return map.entrySet().stream().sorted(Map.Entry.comparingByValue()).map(productIntegerEntry -> productIntegerEntry.getKey()).limit(5).collect(Collectors.toList());
+        List<Product> products= map.entrySet().stream().sorted(Map.Entry.comparingByValue()).map(productIntegerEntry -> productIntegerEntry.getKey()).limit(5).collect(Collectors.toList());
+        Collections.reverse(products);
+        return  products;
     }
 }
 
