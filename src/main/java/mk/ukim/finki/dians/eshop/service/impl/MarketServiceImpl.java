@@ -10,28 +10,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service za Market
+ */
+
+
 @Service
+
 public class MarketServiceImpl implements MarketService {
     private final MarketRepository marketRepository;
-    //Constructor
+
+    /**
+     * Konstruktor
+     * @param marketRepository -Baza na Marketi
+     */
     public MarketServiceImpl(MarketRepository marketRepository) {
         this.marketRepository = marketRepository;
     }
 
+    /**
+     * Vrakja lista od site marketi vo marketRepository
+     * @return -Go vrakja rezultatot od prebaruvanjeto
+     */
     @Override
-    //Vrakja lista od site marketi vo marketRepository
     public List<Market> findAll() {
         return marketRepository.findAll();
     }
 
+    /**
+     * Vrakja lista od marketi spored ime(name) prateno kako argument vo funkcijata
+     * @param name - Ime na marketot
+     * @return -Go vrakja rezultatot od prebaruvanjeto
+     */
     @Override
-    //Vrakja lista od marketi spored ime(name) prateno kako argument vo funkcijata
     public List<Market> findMarketsByName(String name) {
         return marketRepository.findMarketByNameOrNameEN(name,name);
     }
 
+    /**
+     * Vrakja lista od produkti na marketot sto go prakjame kako argument vo funkcijata
+     * @param market - Ime na marketot
+     * @return - Go vrakja rezultatot od prebaruvanjeto
+     */
     @Override
-    //Vrakja lista od produkti na marketot sto go prakjame kako argument vo funkcijata
     public List<Product> findProductsByMarket(String market) {
         if(findMarketsByName(market).isEmpty()){
             return new ArrayList<>();

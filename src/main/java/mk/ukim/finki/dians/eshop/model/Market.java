@@ -42,4 +42,8 @@ public class Market {
         return name;
     }
 
+    public List<Product> getProducts(){
+        return products;
+    }
+
 }
