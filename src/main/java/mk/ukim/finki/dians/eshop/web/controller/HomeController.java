@@ -2,6 +2,7 @@ package mk.ukim.finki.dians.eshop.web.controller;
 
 import mk.ukim.finki.dians.eshop.service.MarketService;
 import mk.ukim.finki.dians.eshop.service.ProductService;
+import mk.ukim.finki.dians.eshop.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,19 +14,24 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/")
 public class HomeController {
-    //Se generira interfejs za prebaruvanje na marketi.
+    //Se generira interfejs za prebaruvanje na marketi(biznis logika).
     private final MarketService marketService;
-    //Se generira interfejs za prebaruvanje na produkti.
+    //Se generira interfejs za prebaruvanje na produkti(biznis logika).
     private final ProductService productService;
+    //Se generira interfejs za prebaruvanje na shopping carts(biznis logika).
+    private final ShoppingCartService shoppingCartService;
+
 
     /**
      * Konstruktor
      * @param marketService - interfejs za prebaruvanje na marketi.
      * @param productService - interfejs za prebaruvanje na produkti.
+     * @param shoppingCartService
      */
-    public HomeController(MarketService marketService, ProductService productService) {
+    public HomeController(MarketService marketService, ProductService productService, ShoppingCartService shoppingCartService) {
         this.marketService = marketService;
         this.productService = productService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     /**
@@ -48,6 +54,7 @@ public class HomeController {
             model.addAttribute("newurl","/?language=MK");
         model.addAttribute("url","/?language="+language);
         request.getSession().setAttribute("language",language);
+        model.addAttribute("bestProducts",shoppingCartService.getMostBoughtProducts());
 
         return "master-template";
     }

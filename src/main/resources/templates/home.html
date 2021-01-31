@@ -56,14 +56,11 @@
 
         </div>
         <div class="col-lg-6">
-            <h1 id="best-title">Најпродавани Продукти</h1>
+            <h1  id="best-title" th:text="${language}=='MK'?'Најпродавани продукти':'Most selled products'"></h1>
+
             <ul class="best">
-                <li>Јаболко,Портокали     30ден</li>
-                <li>Јаболко,Портокали     30ден</li>
-                <li>Јаболко,Портокали     30ден</li>
-                <li>Јаболко,Портокали     30ден</li>
-                <li>Јаболко,Портокали     30ден</li>
-                <li>Јаболко,Портокали     30ден</li>
+                <li th:each="product : ${bestProducts}" th:text="${language}=='MK'?${product.getName()}+' '+${product.getPrice()+'ден'}:${product.getNameEN()}+' '+${product.getPrice()+'den'}"></li>
+
             </ul>
         </div>
     </div>

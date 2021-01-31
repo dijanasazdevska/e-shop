@@ -5,9 +5,13 @@ import mk.ukim.finki.dians.eshop.model.Product;
 import mk.ukim.finki.dians.eshop.model.ShoppingCart;
 import mk.ukim.finki.dians.eshop.model.User;
 import mk.ukim.finki.dians.eshop.repository.OrderRepository;
+import mk.ukim.finki.dians.eshop.repository.ProductRepository;
 import mk.ukim.finki.dians.eshop.repository.ShoppingCartRepository;
 import mk.ukim.finki.dians.eshop.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -15,15 +19,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     //Se generira interfejs za prebaruvanje na narachki od bazata na narachki za odreden korisnik.
     private final OrderRepository orderRepository;
+    //Se generira interfejs za prebaruvanje na produkti
+
+    private final ProductRepository productRepository;
 
     /**
      * Konstruktor
      * @param shoppingCartRepository - interfejs za prebaruvanje na koshnichka od bazata na koshnichki za odreden korisnik.
      * @param orderRepository - interfejs za prebaruvanje na narachki od bazata na narachki za odreden korisnik.
+     * @param productRepository
      */
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository) {
+    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, ProductRepository productRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
     }
 
     /**
@@ -56,6 +65,29 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart findShoppingCartForUser(User user) {
         return shoppingCartRepository.findByUser(user);
+    }
+
+    /**
+     *
+     * @return
+     */
+    //dava 5 najkupuvani proizvodi od nashite korisnici
+    @Override
+    public List<Product> getMostBoughtProducts() {
+        Map<Product,Integer> map= new HashMap<>();
+        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findAll();
+        for(ShoppingCart s : shoppingCarts){
+            for(Order  o  : s.getOrders()){
+                if(map.containsKey(o.getProduct())){
+                    map.put(o.getProduct(),map.get(o.getProduct())+1);
+                }
+                map.putIfAbsent(o.getProduct(),1);
+
+            }
+
+
+        }
+        return map.entrySet().stream().sorted(Map.Entry.comparingByValue()).map(productIntegerEntry -> productIntegerEntry.getKey()).limit(5).collect(Collectors.toList());
     }
 }
 
