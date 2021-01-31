@@ -8,8 +8,7 @@
 
     <!-- Bootstrap CSS -->
 
-    <title th:if="${language}!='EN'">Насловна</title>
-    <title th:if="${language}=='EN'">Home</title>
+    <title th:text="${language}!='EN'?'Насловна':'Home'"></title>
 
 
 </head>
